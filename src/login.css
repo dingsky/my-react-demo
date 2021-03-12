@@ -1,0 +1,24 @@
+.loginInput {
+    font-size: 20px;
+    height: 40px;
+    width: 290px;
+    margin-top: 50px;
+    margin-left: 140px;
+}
+
+.loginButton {
+    margin-top: 50px;
+    font-size: 20px;
+    height: 50px;
+    width: 300px;
+    margin-left: 140px;
+}
+
+.loginWindow {
+    margin-left: 350px;
+    margin-top: 100px;
+    height: 400px;
+    width: 600px;
+    border: 1px solid rgba(187, 187, 187, 100);
+    background-color: #7FFFD4;
+}
