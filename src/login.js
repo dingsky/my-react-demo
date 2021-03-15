@@ -11,9 +11,10 @@ const loginButtonClass = "loginButton";
 
 class Login extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.login = this.login.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.state = {
             userName : '',
             userPwd : '',
@@ -28,15 +29,16 @@ class Login extends Component {
         }
 
         const hash = sha256(this.state.userPwd).toString();
-        axios.post(contrants.myAppUrl, {"userName": this.state.userName, "passWdHash": hash}).then(
+        axios.post(contrants.myAppUrl, {"userName": this.state.userName, "passWdHash": hash})
+            .then(
             function (res) {
                 if (res.data.respCode === "0000") {
-                    alert("登录成功");
                     this.props.history.push("/menu");
                 } else {
                     alert('登录失败: ' + res.data.respCode + "==>" + res.data.respDesc);
+                    this.setState({userName : '', userPwd : '',});
                 }
-            }
+            }.bind(this)
         ).catch(err => {alert(err.toString())});
     }
 
