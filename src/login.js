@@ -1,6 +1,8 @@
 import React from 'react';
-import './login.css'
-import { message } from "antd";
+import './login.css';
+import axios from 'axios';
+import contrants from "./contrants/contrants";
+import sha256 from 'crypto-js/sha256';
 const { Component } = React;
 
 const loginWindowClass = "loginWindow";
@@ -25,9 +27,17 @@ class Login extends Component {
             return
         }
 
-        if(this.state.userName === "admin123" && this.state.userPwd === "admin123") {
-            this.props.history.push("/menu")
-        }
+        const hash = sha256(this.state.userPwd).toString();
+        axios.post(contrants.myAppUrl, {"userName": this.state.userName, "passWdHash": hash}).then(
+            function (res) {
+                if (res.data.respCode === "0000") {
+                    alert("登录成功");
+                    this.props.history.push("/menu");
+                } else {
+                    alert('登录失败: ' + res.data.respCode + "==>" + res.data.respDesc);
+                }
+            }
+        ).catch(err => {alert(err.toString())});
     }
 
     handleChange(key, value) {
